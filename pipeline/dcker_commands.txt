@@ -11,16 +11,16 @@ docker run -it \
   postgres:18
 
 #for running from virtual env
-uv run python ingest_data.py
-    --pg-user=root
-    --pg-pass=root
-    --pg-host=localhost
-    --pg-port=5432
-    --pg-db=ny_taxi
-    --target-table=yellow_taxi_trips
-    --month-1
-    --year=2021
-    --chunksize=100000
+uv run python ingest_data.py \
+    --pg-user=root \
+    --pg-pass=root \
+    --pg-host=localhost \
+    --pg-port=5432 \
+    --pg-db=ny_taxi \
+    --target-table=yellow_taxi_trips \
+    --month-1 \
+    --year=2021 \
+    --chunksize=100000 \
 
 #second container which replaces running in venv:
 docker run -it --rm \
