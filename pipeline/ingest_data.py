@@ -45,9 +45,14 @@ def run(pg_user, pg_pass, pg_host, pg_port, pg_db, year, month, target_table, ch
 
     prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow'
     url = f'{prefix}/yellow_tripdata_{year}-{month:02d}.csv.gz'
+    
+    zones_url = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv'
 
     #port 5432 is postgres container running on localhost
     engine = create_engine(f'postgresql+psycopg://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}')
+
+    df_zones = pd.read_csv(zones_url)
+    df_zones.to_sql(name='taxi_zones', con=engine, if_exists='replace')
 
     #chunking to load data into db
     df_iter = pd.read_csv(
